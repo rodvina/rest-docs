@@ -7,7 +7,7 @@
 * The gradle build is setup to build a deployable war
 
 #### Clone and configure Gradle for Eclipse
-`git clone ssh://git@stash.kemperi.com:7999/de/rest-kemperdocs.git`
+`git clone ssh://git@stash.kemperi.com:7999/dep/rest-kemperdocs.git`
 
 After cloning the project into eclipse, you can configure the project to use gradle in 1 of 2 ways:
 
