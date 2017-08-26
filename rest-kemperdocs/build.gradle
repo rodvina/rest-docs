@@ -36,6 +36,13 @@ dependencies {
 	compile('io.springfox:springfox-swagger-ui:2.6.1')
 	//added for json conversion of dates
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.4")
+	compile 'org.apache.commons:commons-lang3:3.0'
+	compile 'commons-lang:commons-lang:2.6'
+	//log4j for spring boot starter
+	compile('org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}')
+	
+	compile files('lib/CMSClient-2.3.jar')
+	runtime files('lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/sonic_ASPI.jar', 'lib/sonic_Client.jar', 'lib/sonic_Client_ext.jar', 'lib/sonic_Crypto.jar', 'lib/sonic_Selector.jar', 'lib/sonic_XA.jar', 'lib/sonic_XMessage.jar', 'lib/sonic-jms-api.jar', 'lib/sonic-jms-ra.jar', 'lib/xbean.jar')
 	
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

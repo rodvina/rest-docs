@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class DecDocument extends Document {
+public class DecResult extends DocumentResult {
 
 	private static final long serialVersionUID = 1L;
 
