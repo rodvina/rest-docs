@@ -5,8 +5,6 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import com.kemper.docs.rest.model.BaseModel;
 import com.kemper.docs.rest.model.RetrieveResults;
@@ -22,39 +20,42 @@ public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDoc
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CMSDocumentService.class);
 	
-	@Value("${cms.request.username}") 
-	private String UNAME;
+//	@Value("${cms.request.username}") 
+//	private String UNAME;
+//	
+//	@Value("${cms.request.password}") 
+//	private String PWD;
+//	
+//	@Value("${cms.request.orgname}") 
+//	private String ORGNAME;
+//	
+//	@Value("${cms.request.appname}") 
+//	private String APPNAME;
+//	
+//	@Value("${cms.request.spname}") 
+//	private String SPNAME;
 	
-	@Value("${cms.request.password}") 
-	private String PWD;
-	
-	@Value("${cms.request.orgname}") 
-	private String ORGNAME;
-	
-	@Value("${cms.request.appname}") 
-	private String APPNAME;
-	
-	@Value("${cms.request.spname}") 
-	private String SPNAME;
+	@Autowired
+	private CMSProperties cmsProperties;
 	
 	@Autowired
 	private CMService cmClient;
 	
 	@PostConstruct
 	public void init() {
-		LOGGER.info("**: "+APPNAME);
-		LOGGER.info("**: "+ORGNAME);
-		LOGGER.info("**: "+SPNAME);
-		LOGGER.info("**: "+UNAME);
-		LOGGER.info("**: "+PWD);
+//		LOGGER.info("**: "+APPNAME);
+//		LOGGER.info("**: "+ORGNAME);
+//		LOGGER.info("**: "+SPNAME);
+//		LOGGER.info("**: "+UNAME);
+//		LOGGER.info("**: "+PWD);
 	}
 	
 	@Override
 	public RetrieveResults getDocument(String contentId) {
 		
 		RetrieveRequest retrieveRequest = new RetrieveRequest();
-		RequestUtils.addCustDetails(retrieveRequest, SPNAME, UNAME, PWD);
-		RequestUtils.addClientDetails(retrieveRequest, ORGNAME, APPNAME);
+		RequestUtils.addCustDetails(retrieveRequest, cmsProperties.getRequestSpname(), cmsProperties.getRequestUsername(), cmsProperties.getRequestPassword());
+		RequestUtils.addClientDetails(retrieveRequest, cmsProperties.getRequestOrgname(), cmsProperties.getRequestAppname());
 		
 		retrieveRequest.setContentID(contentId);
 		
@@ -77,8 +78,10 @@ public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDoc
 	public SearchReply search(T request) {
 		
 		SearchRequest searchRequest = new SearchRequest();
-		RequestUtils.addCustDetails(searchRequest, SPNAME, UNAME, PWD);
-		RequestUtils.addClientDetails(searchRequest, ORGNAME, APPNAME);
+
+		RequestUtils.addCustDetails(searchRequest, cmsProperties.getRequestSpname(), cmsProperties.getRequestUsername(), cmsProperties.getRequestPassword());
+		RequestUtils.addClientDetails(searchRequest, cmsProperties.getRequestOrgname(), cmsProperties.getRequestAppname());
+		
 		
 		RequestUtils.addSearchDetails(searchRequest, 
 				RequestUtils.createDomains(this.getDomains()), this.getExpression(request).toString());

@@ -2,6 +2,9 @@ package com.kemper.docs.rest.controller;
 
 import java.time.LocalDate;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +28,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value="/api/v1/docs/dec")
 @Api(value="kemper docs", produces = "application/json")
 public class DecsController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DecsController.class);
 	
 	@Autowired
 	@Qualifier("DecsService")
@@ -39,7 +43,19 @@ public class DecsController {
 			@ApiParam(value="Policy number") @RequestParam(required=false) String polno, 
 			@ApiParam(value="Transaction type") @RequestParam(required=false) String tranType) {
 		
-		return new ResponseEntity<SearchResults<DecResult>>(this.buildSearchResults(fromDate, toDate, lastName, polno, tranType), HttpStatus.OK);
+		DecRequest request = new DecRequest();
+		request.setFromDate(fromDate);
+		request.setToDate(toDate);
+		request.setDocumentType("Policy");
+		request.setPolicyno(polno);
+		request.setTransactionType(tranType);
+		request.setLastName(lastName);
+		
+		SearchResults<DecResult> results = service.search(request);
+		LOGGER.warn("RecordsFound=" + CollectionUtils.size(results.getResults()));
+		
+		return new ResponseEntity<SearchResults<DecResult>>(results, HttpStatus.OK);
+//		return new ResponseEntity<SearchResults<DecResult>>(this.buildSearchResults(fromDate, toDate, lastName, polno, tranType), HttpStatus.OK);
 	}
 
 	private SearchResults<DecResult> buildSearchResults(LocalDate fromDate, LocalDate toDate, String lastName,
@@ -50,8 +66,8 @@ public class DecsController {
 		dec.setPolicyno(polno);
 		dec.setTransactionType(tranType);
 		dec.setName(lastName);
-		dec.setEffectiveDate(fromDate);
-		dec.setProcessedDate(toDate);
+//		dec.setEffectiveDate(fromDate);
+//		dec.setProcessedDate(toDate);
 		results.getResults().add(dec);
 		return results;
 	}

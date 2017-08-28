@@ -2,6 +2,7 @@ package com.kemper.docs.rest.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.kemper.docs.rest.model.DocumentResult;
 import com.kemper.docs.rest.model.SearchResults;
+import com.kemper.docs.rest.util.CMSConstants;
 import com.kemper.docs.rest.util.CMSDomain;
 import com.ksg.cms.client.model.DomainResponse;
 import com.ksg.cms.client.model.SearchReply;
@@ -60,6 +62,10 @@ public abstract class DocMapper<T extends DocumentResult> implements IDocMapper<
 							.collect(Collectors.toList());
 		return collect;
 		
+	}
+	
+	protected String getCMSFieldValue(Map<String, String> metadataMap, CMSConstants.CMSField cmsField) {
+		return metadataMap.get(cmsField.toString());
 	}
 	
 	/**
