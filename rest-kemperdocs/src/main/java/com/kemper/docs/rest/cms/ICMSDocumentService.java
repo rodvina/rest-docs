@@ -1,10 +1,10 @@
-package com.kemper.docs.cms;
+package com.kemper.docs.rest.cms;
 
 import com.kemper.docs.rest.model.BaseModel;
 import com.kemper.docs.rest.model.RetrieveResults;
 import com.ksg.cms.client.model.SearchReply;
 
-public interface DocumentService<T extends BaseModel> {
+public interface ICMSDocumentService<T extends BaseModel> {
 	
 	public RetrieveResults getDocument(String contentId);
 

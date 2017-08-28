@@ -1,8 +1,9 @@
 package com.kemper.docs.rest.controller;
 
 import java.time.LocalDate;
-import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kemper.docs.rest.model.DecRequest;
 import com.kemper.docs.rest.model.DecResult;
 import com.kemper.docs.rest.model.SearchResults;
+import com.kemper.docs.rest.service.DocsService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +25,10 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value="/api/v1/docs/dec")
 @Api(value="kemper docs", produces = "application/json")
 public class DecsController {
+	
+	@Autowired
+	@Qualifier("DecsService")
+	private DocsService<DecRequest, DecResult> service;
 
 	@ApiOperation(value="findDecsBySearchParams", notes="Get a list of declaration documents based on search criteria", produces="application/json")
 	@GetMapping

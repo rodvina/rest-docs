@@ -4,14 +4,16 @@ public abstract class DocumentResult extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String urlRetrieve;
+	private String contentId;
 
-	public String getUrlRetrieve() {
-		return urlRetrieve;
+	public String getContentId() {
+		return contentId;
 	}
 
-	public void setUrlRetrieve(String urlRetrieve) {
-		this.urlRetrieve = urlRetrieve;
+	public void setContentId(String contentId) {
+		this.contentId = contentId;
 	}
+	
+	
 	
 }

@@ -12,7 +12,7 @@ public class DecRequest extends BaseRequest {
 	private String lob;
 	private LocalDate effectiveDate;
 	private String state;
-	private String zip;
+	private String zipCode;
 	
 	public String getPolicyno() {
 		return policyno;
@@ -46,11 +46,11 @@ public class DecRequest extends BaseRequest {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getZip() {
-		return zip;
+	public String getZipCode() {
+		return zipCode;
 	}
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 	public String getLastName() {
 		return lastName;

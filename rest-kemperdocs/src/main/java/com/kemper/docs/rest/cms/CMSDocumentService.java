@@ -1,4 +1,6 @@
-package com.kemper.docs.cms;
+package com.kemper.docs.rest.cms;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,7 @@ import com.ksg.cms.client.model.SearchReply;
 import com.ksg.cms.client.model.SearchRequest;
 import com.ksg.cms.client.util.RequestUtils;
 
-@Service("CMSDocumentService")
-public abstract class CMSDocumentService<T extends BaseModel> implements DocumentService<T> {
+public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDocumentService<T> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CMSDocumentService.class);
 	
@@ -38,6 +39,15 @@ public abstract class CMSDocumentService<T extends BaseModel> implements Documen
 	
 	@Autowired
 	private CMService cmClient;
+	
+	@PostConstruct
+	public void init() {
+		LOGGER.info("**: "+APPNAME);
+		LOGGER.info("**: "+ORGNAME);
+		LOGGER.info("**: "+SPNAME);
+		LOGGER.info("**: "+UNAME);
+		LOGGER.info("**: "+PWD);
+	}
 	
 	@Override
 	public RetrieveResults getDocument(String contentId) {
@@ -69,16 +79,16 @@ public abstract class CMSDocumentService<T extends BaseModel> implements Documen
 		SearchRequest searchRequest = new SearchRequest();
 		RequestUtils.addCustDetails(searchRequest, SPNAME, UNAME, PWD);
 		RequestUtils.addClientDetails(searchRequest, ORGNAME, APPNAME);
-
 		
-		RequestUtils.addSearchDetails(searchRequest, RequestUtils.createDomains(this.getDomains()), this.getExpression(request).toString());
+		RequestUtils.addSearchDetails(searchRequest, 
+				RequestUtils.createDomains(this.getDomains()), this.getExpression(request).toString());
 		
 		LOGGER.info("searchRequest="+searchRequest.toXmlString());
 		
 		SearchReply searchReply = cmClient.search(searchRequest);
 
 		LOGGER.info(">>>>>>>>>> Response XML:<<<<<<<<<<<\n" + searchReply.toXmlString());
-		
+
 		return searchReply;
 	}
 
