@@ -28,6 +28,18 @@ public class CMSProperties {
 	
 	@Value("${cms.cmis.url}") 
 	private String cmisUrl;
+	
+	@Value("${cms.searchEntryPoint}")
+	private String searchDest;
+	
+	@Value("${cms.loadEntryPoint}")
+	private String loadDest;
+	
+	@Value("${cms.retrieveEntryPoint}")
+	private String retrieveDest;
+	
+	@Value("${cms.coatcheckUrl}")
+	private String coatCheckUrl;
 		
 	public String getRequestUsername() {
 		return requestUsername;
@@ -75,6 +87,30 @@ public class CMSProperties {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+	public String getSearchDest() {
+		return searchDest;
+	}
+	public void setSearchDest(String searchDest) {
+		this.searchDest = searchDest;
+	}
+	public String getLoadDest() {
+		return loadDest;
+	}
+	public void setLoadDest(String loadDest) {
+		this.loadDest = loadDest;
+	}
+	public String getRetrieveDest() {
+		return retrieveDest;
+	}
+	public void setRetrieveDest(String retrieveDest) {
+		this.retrieveDest = retrieveDest;
+	}
+	public String getCoatCheckUrl() {
+		return coatCheckUrl;
+	}
+	public void setCoatCheckUrl(String coatCheckUrl) {
+		this.coatCheckUrl = coatCheckUrl;
 	}
 	
 }

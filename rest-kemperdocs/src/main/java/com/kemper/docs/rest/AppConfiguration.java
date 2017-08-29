@@ -6,13 +6,13 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import com.kemper.docs.rest.cms.CMSProperties;
+import com.kemper.docs.rest.jms.JMSProperties;
 import com.ksg.cms.client.CMSClient;
 import com.ksg.cms.client.util.ClientUtils;
 
@@ -24,24 +24,11 @@ public class AppConfiguration {
 	@Autowired
 	CMSProperties cmsProperties;
 	
-	@Value("${cms.requestUsername}")
-	private String requestUsername;
-	
-	@Value("${cms.requestPassword}")
-	private String requestPassword;
-	
-	@Value("${cms.cmis.repositoryid}")
-	private String requestSpname;
-	
-	@Value("${cms.cmis.repositoryid}")
-	private String cmisRepositoryid;
-	
-	@Value("${cms.cmis.url}") 
-	private String cmisUrl;
+	@Autowired
+	JMSProperties jmsProperties;
 	
 	@Bean
 	public CMSClient getCMSClient() {
-		LOGGER.info("cmisurl: " + cmisUrl);
 		LOGGER.info("cmisurl: " + cmsProperties);
 
 //		return ClientUtils.getClient(
@@ -54,10 +41,10 @@ public class AppConfiguration {
 //JMS IMPL		
 		return ClientUtils.getClient(
 				this.connectionFactory(), 
-				"http://appsdev.unitrininc.com", 
-				"com.usg.cms.load.mdp", 
-				"com.usg.cms.search.mdp", 
-				"com.usg.cms.retrieve.mdp");
+				cmsProperties.getCoatCheckUrl(), 
+				cmsProperties.getLoadDest(), 
+				cmsProperties.getSearchDest(), 
+				cmsProperties.getRetrieveDest());
 	}
 	
 	@Bean
@@ -66,12 +53,12 @@ public class AppConfiguration {
 		progress.message.jclient.ConnectionFactory cf = null;
 		try {
 			cf = new progress.message.jclient.ConnectionFactory();
-			cf.setConnectionURLs("tcp://kahobtesbb93.kah.unitrininc.com:2916");
-			cf.setDefaultUser("USGClient");
-			cf.setDefaultPassword("USGClient");
+			cf.setConnectionURLs(jmsProperties.getConnectionUrl());
+			cf.setDefaultUser(jmsProperties.getUserid());
+			cf.setDefaultPassword(jmsProperties.getPassword());
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			LOGGER.error("Error=FailedToCreateConnectionFactory", e);
 		}
 
 		return cf;

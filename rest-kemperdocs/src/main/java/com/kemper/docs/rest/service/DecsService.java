@@ -9,7 +9,6 @@ import com.kemper.docs.rest.mapper.IDocMapper;
 import com.kemper.docs.rest.model.DecRequest;
 import com.kemper.docs.rest.model.DecResult;
 import com.kemper.docs.rest.model.SearchResults;
-import com.kemper.docs.rest.util.CMSDomain;
 import com.ksg.cms.client.model.SearchReply;
 
 @Service("DecsService")
@@ -27,6 +26,6 @@ public class DecsService implements DocsService<DecRequest, DecResult> {
 	public SearchResults<DecResult> search(DecRequest request) {
 		
 		SearchReply searchReply = docService.search(request);
-		return mapper.mapCMSToModel(searchReply, CMSDomain.DOM_DECS_AND_NTCE);
+		return mapper.mapCMSToModel(searchReply);
 	}
 }

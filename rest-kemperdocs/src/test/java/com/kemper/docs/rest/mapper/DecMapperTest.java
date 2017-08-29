@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.kemper.docs.rest.model.DecResult;
 import com.kemper.docs.rest.model.SearchResults;
 import com.kemper.docs.rest.util.CMSDomain;
+import com.kemper.docs.rest.util.CMSConstants.CMSField;
 import com.ksg.cms.client.model.DomainResponse;
 import com.ksg.cms.client.model.SearchReply;
 
@@ -46,8 +47,8 @@ public class DecMapperTest {
 		DomainResponse dr1 = new DomainResponse();
 		//build metadata map for domain response
 		Map<String, String> metaDataMap = new HashMap<String, String>();
-		metaDataMap.put("POL_NO", "1000010");
-		metaDataMap.put("PROD_CD", "04109600");
+		metaDataMap.put(CMSField.POL_NO_TX_MV.toString(), "1000010");
+		metaDataMap.put(CMSField.PRDCR_CD.toString(), "04109600");
 		dr1.setMetaDataMap(metaDataMap);
 		//add to domainlist
 		domainList.add(dr1);
@@ -56,10 +57,10 @@ public class DecMapperTest {
 		
 		Mockito.when(searchReply.getDomainResponses()).thenReturn(map1);
 
-		SearchResults<DecResult> results = mapper.mapCMSToModel(searchReply, CMSDomain.DOM_DECS_AND_NTCE);
+		SearchResults<DecResult> results = mapper.mapCMSToModel(searchReply);
 		
-		assertThat(results.getResults().get(0).getPolicyno(), equalTo("1000010"));
-		assertThat(results.getResults().get(0).getProducerCode(), equalTo("04109600"));
+		assertThat(results.getResults().get("DOM_DECS_AND_NTCE").get(0).getPolicyno(), equalTo("1000010"));
+		assertThat(results.getResults().get("DOM_DECS_AND_NTCE").get(0).getProducerCode(), equalTo("04109600"));
 	}
 
 }

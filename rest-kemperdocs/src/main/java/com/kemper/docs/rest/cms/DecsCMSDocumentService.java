@@ -33,7 +33,7 @@ public class DecsCMSDocumentService extends CMSDocumentService<DecRequest> {
 	}
 
 	@Override
-	protected String[] getDomains() {
+	public String[] getDomains() {
 		//TODO: find domain name
 		return new String[]{CMSDomain.DOM_DECS_AND_NTCE.toString()};
 	}

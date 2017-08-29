@@ -9,5 +9,7 @@ public interface ICMSDocumentService<T extends BaseModel> {
 	public RetrieveResults getDocument(String contentId);
 
 	public SearchReply search(T request);
+	
+	public String[] getDomains();
 
 }

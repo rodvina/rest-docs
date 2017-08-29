@@ -1,8 +1,10 @@
 package com.kemper.docs.rest.mapper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.kemper.docs.rest.model.DocumentResult;
 import com.kemper.docs.rest.model.SearchResults;
 import com.kemper.docs.rest.util.CMSConstants;
-import com.kemper.docs.rest.util.CMSDomain;
 import com.ksg.cms.client.model.DomainResponse;
 import com.ksg.cms.client.model.SearchReply;
 
@@ -32,7 +33,7 @@ public abstract class DocMapper<T extends DocumentResult> implements IDocMapper<
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocMapper.class);
 	
-	public SearchResults<T> mapCMSToModel(SearchReply searchReply, CMSDomain domain) {
+	public SearchResults<T> mapCMSToModel(SearchReply searchReply) {
 		SearchResults<T> searchResults = new SearchResults<T>();
 		//check searchReply
 		if (searchReply != null && searchReply.isSuccess()) {
@@ -41,8 +42,16 @@ public abstract class DocMapper<T extends DocumentResult> implements IDocMapper<
 			if (MapUtils.isNotEmpty(searchReply.getDomainResponses()) ) {
 			
 				//find response list by domain
-				List<DomainResponse> responseListByDomain = searchReply.getDomainResponses().get(domain.toString());
-				searchResults.setResults(this.map(responseListByDomain));
+//				List<DomainResponse> responseListByDomain = searchReply.getDomainResponses().get(domain);
+//				searchResults.setResults(this.map(responseListByDomain));
+
+				Iterator<Entry<String, List<DomainResponse>>> it = searchReply.getDomainResponses().entrySet().iterator();
+//				//iterate through each domain
+				while (it.hasNext()) {
+					Entry<String, List<DomainResponse>> domain = it.next();	
+					List<DomainResponse> responseListByDomain = domain.getValue();
+					searchResults.putResults(domain.getKey(), this.map(responseListByDomain));
+				}
 			}
 		}
 		

@@ -105,6 +105,6 @@ public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDoc
 	 * Implement to return string array of domains
 	 * @return
 	 */
-	abstract String[] getDomains();
+	public abstract String[] getDomains();
 	
 }

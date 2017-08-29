@@ -7,5 +7,5 @@ import com.ksg.cms.client.model.SearchReply;
 
 public interface IDocMapper<T extends DocumentResult> {
 
-	public SearchResults<T> mapCMSToModel(SearchReply searchReply, CMSDomain domain);
+	public SearchResults<T> mapCMSToModel(SearchReply searchReply);
 }

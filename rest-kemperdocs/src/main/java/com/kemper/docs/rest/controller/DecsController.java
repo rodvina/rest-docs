@@ -1,6 +1,7 @@
 package com.kemper.docs.rest.controller;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -52,7 +53,13 @@ public class DecsController {
 		request.setLastName(lastName);
 		
 		SearchResults<DecResult> results = service.search(request);
-		LOGGER.warn("RecordsFound=" + CollectionUtils.size(results.getResults()));
+		Iterator i = results.getResults().keySet().iterator();
+		String msg = "Desc=RecordsFound;";
+		while (i.hasNext()) {
+			String domain = (String)i.next();
+			msg = msg + domain + "=" +results.getResults().get(domain).size();
+		}
+		LOGGER.warn(msg);
 		
 		return new ResponseEntity<SearchResults<DecResult>>(results, HttpStatus.OK);
 //		return new ResponseEntity<SearchResults<DecResult>>(this.buildSearchResults(fromDate, toDate, lastName, polno, tranType), HttpStatus.OK);
@@ -68,7 +75,7 @@ public class DecsController {
 		dec.setName(lastName);
 //		dec.setEffectiveDate(fromDate);
 //		dec.setProcessedDate(toDate);
-		results.getResults().add(dec);
+//		results.getResults().add(dec);
 		return results;
 	}
 }
