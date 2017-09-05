@@ -1,74 +1,76 @@
 package com.kemper.docs.rest.cms;
 
-import com.ksg.cms.client.model.Expression;
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kemper.docs.rest.util.CMSConstants.CMSField;
+import com.ksg.cms.client.model.Expression;
+
 public class ExpressionBuilder {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionBuilder.class);
 
-	public static Expression buildExpressionForBetween(Expression expression, String attribute, Date fromDate,
+	public static Expression buildExpressionForBetween(Expression expression, CMSField attribute, Date fromDate,
 			Date toDate) {
 		if (expression == null) {
-			expression = Expression.between(attribute, fromDate, toDate);
+			expression = Expression.between(attribute.toString(), fromDate, toDate);
 		} else {
-			expression = expression.and(Expression.between(attribute, fromDate, toDate));
+			expression = expression.and(Expression.between(attribute.toString(), fromDate, toDate));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForEq(Expression expression, String attribute, String value) {
+	public static Expression buildExpressionForEq(Expression expression, CMSField attribute, String value) {
 		if (expression == null) {
-			expression = Expression.eq(attribute, value);
+			expression = Expression.eq(attribute.toString(), value);
 		} else {
-			expression = expression.and(Expression.eq(attribute, value));
+			expression = expression.and(Expression.eq(attribute.toString(), value));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForIn(Expression expression, String attribute, String[] values) {
+	public static Expression buildExpressionForIn(Expression expression, CMSField attribute, String[] values) {
 		if (expression == null) {
-			expression = Expression.in(attribute, values);
+			expression = Expression.in(attribute.toString(), values);
 		} else {
-			expression = expression.and(Expression.in(attribute, values));
+			expression = expression.and(Expression.in(attribute.toString(), values));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForGtEq(Expression expression, String attribute, String value) {
+	public static Expression buildExpressionForGtEq(Expression expression, CMSField attribute, String value) {
 		if (expression == null) {
-			expression = Expression.gtEq(attribute, value);
+			expression = Expression.gtEq(attribute.toString(), value);
 		} else {
-			expression = expression.and(Expression.gtEq(attribute, value));
+			expression = expression.and(Expression.gtEq(attribute.toString(), value));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForLike(Expression expression, String attribute, String value) {
+	public static Expression buildExpressionForLike(Expression expression, CMSField attribute, String value) {
 		if (expression == null) {
-			expression = Expression.like(attribute, value);
+			expression = Expression.like(attribute.toString(), value);
 		} else {
-			expression = expression.and(Expression.like(attribute, value));
+			expression = expression.and(Expression.like(attribute.toString(), value));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForStartsWith(Expression expression, String attribute, String value) {
+	public static Expression buildExpressionForStartsWith(Expression expression, CMSField attribute, String value) {
 		if (expression == null) {
-			expression = Expression.startsWith(attribute, value);
+			expression = Expression.startsWith(attribute.toString(), value);
 		} else {
-			expression = expression.and(Expression.startsWith(attribute, value));
+			expression = expression.and(Expression.startsWith(attribute.toString(), value));
 		}
 		return expression;
 	}
 
-	public static Expression buildExpressionForLtEq(Expression expression, String attribute, String value) {
+	public static Expression buildExpressionForLtEq(Expression expression, CMSField attribute, String value) {
 		if (expression == null) {
-			expression = Expression.ltEq(attribute, value);
+			expression = Expression.ltEq(attribute.toString(), value);
 		} else {
-			expression = expression.and(Expression.ltEq(attribute, value));
+			expression = expression.and(Expression.ltEq(attribute.toString(), value));
 		}
 		return expression;
 	}

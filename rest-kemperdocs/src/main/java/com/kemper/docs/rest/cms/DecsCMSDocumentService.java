@@ -28,7 +28,7 @@ public class DecsCMSDocumentService extends CMSDocumentService<DecRequest> {
 		LOGGER.info("decRequest="+request);
 		//build expression				
 		Expression expression = DecsExpressionBuilder.buildExpression(request);
-
+		LOGGER.info("expression="+expression);
 		return expression;
 	}
 

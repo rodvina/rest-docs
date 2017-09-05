@@ -3,7 +3,6 @@ package com.kemper.docs.rest.controller;
 import java.time.LocalDate;
 import java.util.Iterator;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kemper.docs.rest.model.DecRequest;
 import com.kemper.docs.rest.model.DecResult;
+import com.kemper.docs.rest.model.RetrieveResults;
 import com.kemper.docs.rest.model.SearchResults;
 import com.kemper.docs.rest.service.DocsService;
 
@@ -53,18 +54,29 @@ public class DecsController {
 		request.setLastName(lastName);
 		
 		SearchResults<DecResult> results = service.search(request);
+		
+		//log
 		Iterator i = results.getResults().keySet().iterator();
 		String msg = "Desc=RecordsFound;";
+		
 		while (i.hasNext()) {
 			String domain = (String)i.next();
 			msg = msg + domain + "=" +results.getResults().get(domain).size();
 		}
 		LOGGER.warn(msg);
+		//end log
 		
 		return new ResponseEntity<SearchResults<DecResult>>(results, HttpStatus.OK);
 //		return new ResponseEntity<SearchResults<DecResult>>(this.buildSearchResults(fromDate, toDate, lastName, polno, tranType), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value="retrieveDec", notes="Get the pdf by id", produces="application/json")
+	@GetMapping(value="/id/{contentid}")
+	public ResponseEntity<RetrieveResults> retrieveDec(@PathVariable String contentid) {
 
+		return ResponseEntity.ok().body(service.retrieve(contentid));
+		
+	}
 	private SearchResults<DecResult> buildSearchResults(LocalDate fromDate, LocalDate toDate, String lastName,
 			String polno, String tranType) {
 		

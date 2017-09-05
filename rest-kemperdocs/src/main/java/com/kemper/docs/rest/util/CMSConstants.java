@@ -19,6 +19,11 @@ public class CMSConstants {
 		RSK_ST_CD_MV,
 		MAIL_ZIP_CD_MV,
 		ACCT_NO_TX_MV,
-		EFF_DT_MV
+		EFF_DT_MV,
+		INS_LST_NM_MV,
+		INS_1ST_NM_MV,
+		MAIL_ST_NM_MV,
+		DOC_TYPE_TX
+		
 	}
 }

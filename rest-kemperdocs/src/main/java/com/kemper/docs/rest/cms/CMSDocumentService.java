@@ -1,13 +1,10 @@
 package com.kemper.docs.rest.cms;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kemper.docs.rest.model.BaseModel;
-import com.kemper.docs.rest.model.RetrieveResults;
 import com.ksg.cms.client.CMService;
 import com.ksg.cms.client.model.Expression;
 import com.ksg.cms.client.model.RetrieveReply;
@@ -20,38 +17,14 @@ public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDoc
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CMSDocumentService.class);
 	
-//	@Value("${cms.request.username}") 
-//	private String UNAME;
-//	
-//	@Value("${cms.request.password}") 
-//	private String PWD;
-//	
-//	@Value("${cms.request.orgname}") 
-//	private String ORGNAME;
-//	
-//	@Value("${cms.request.appname}") 
-//	private String APPNAME;
-//	
-//	@Value("${cms.request.spname}") 
-//	private String SPNAME;
-	
 	@Autowired
 	private CMSProperties cmsProperties;
 	
 	@Autowired
 	private CMService cmClient;
 	
-	@PostConstruct
-	public void init() {
-//		LOGGER.info("**: "+APPNAME);
-//		LOGGER.info("**: "+ORGNAME);
-//		LOGGER.info("**: "+SPNAME);
-//		LOGGER.info("**: "+UNAME);
-//		LOGGER.info("**: "+PWD);
-	}
-	
 	@Override
-	public RetrieveResults getDocument(String contentId) {
+	public RetrieveReply getDocument(String contentId) {
 		
 		RetrieveRequest retrieveRequest = new RetrieveRequest();
 		RequestUtils.addCustDetails(retrieveRequest, cmsProperties.getRequestSpname(), cmsProperties.getRequestUsername(), cmsProperties.getRequestPassword());
@@ -61,17 +34,16 @@ public abstract class CMSDocumentService<T extends BaseModel> implements ICMSDoc
 		
 		RetrieveReply retrieveReply = cmClient.retrieve(retrieveRequest);
 		
-		RetrieveResults response = new RetrieveResults();
 		if (retrieveReply.isSuccess()) {
 			LOGGER.warn("Desc=SuccessfulDocRetrieve;ContentId="+contentId);
-			response.setDocument(retrieveReply.getDecodedFileByteArray());
+//			response.setDocument(retrieveReply.getDecodedFileByteArray());
 			
 		} else {
 			LOGGER.error("Error=CMSFailedToRetrieveDocument;RetrieveRequest="+retrieveRequest.toXmlString());
 			LOGGER.error("Error=CMSFailedToRetrieveDocument;RetrieveReply=" + retrieveReply.toXmlString());
 		}
 		
-		return response;
+		return retrieveReply;
 	}
 	
 	@Override

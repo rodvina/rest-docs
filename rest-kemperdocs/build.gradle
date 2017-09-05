@@ -45,6 +45,8 @@ dependencies {
 	compile 'org.apache.commons:commons-lang3:3.0'
 	compile 'commons-lang:commons-lang:2.6'
 	compile 'org.apache.commons:commons-collections4:4.1'
+	//additional jars needed for cmsclient
+	compile 'commons-net:commons-net:2.2'
 	//log4j for spring boot starter
 	compile('org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}')
 	
@@ -54,7 +56,7 @@ dependencies {
 	runtime files('lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/sonic_ASPI.jar', 'lib/sonic_Client.jar', 'lib/sonic_Client_ext.jar', 'lib/sonic_Crypto.jar', 'lib/sonic_Selector.jar', 'lib/sonic_XA.jar', 'lib/sonic_XMessage.jar', 'lib/sonic-jms-api.jar', 'lib/sonic-jms-ra.jar', 'lib/xbean.jar')
 
 //cms cmis:
-//	runtime files('lib/woodstox-core-asl-4.4.0.jar','lib/stax2-api-3.1.4.jar','lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/xbean.jar', 'lib/chemistry-opencmis-client-api-0.13.0.jar', 'lib/chemistry-opencmis-client-bindings-0.13.0.jar', 'lib/chemistry-opencmis-client-impl-0.13.0.jar', 'lib/chemistry-opencmis-commons-api-0.13.0.jar', 'lib/chemistry-opencmis-commons-impl-0.13.0.jar')
+	runtime files('lib/woodstox-core-asl-4.4.0.jar','lib/stax2-api-3.1.4.jar','lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/xbean.jar', 'lib/chemistry-opencmis-client-api-0.13.0.jar', 'lib/chemistry-opencmis-client-bindings-0.13.0.jar', 'lib/chemistry-opencmis-client-impl-0.13.0.jar', 'lib/chemistry-opencmis-commons-api-0.13.0.jar', 'lib/chemistry-opencmis-commons-impl-0.13.0.jar')
 	
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

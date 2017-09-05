@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
@@ -28,17 +29,22 @@ public class AppConfiguration {
 	JMSProperties jmsProperties;
 	
 	@Bean
+	@Profile("local-cmis")
 	public CMSClient getCMSClient() {
 		LOGGER.info("cmisurl: " + cmsProperties);
 
-//		return ClientUtils.getClient(
-//				cmsProperties.getCmisUrl(), 
-//				cmsProperties.getRequestUsername(), 
-//				cmsProperties.getRequestPassword(), 
-//				cmsProperties.getCmisRepositoryid()
-//				);
-
-//JMS IMPL		
+		return ClientUtils.getClient(
+				cmsProperties.getCmisUrl(), 
+				cmsProperties.getRequestUsername(), 
+				cmsProperties.getRequestPassword(), 
+				cmsProperties.getCmisRepositoryid()
+				);
+	}
+//JMS IMPL	
+	@Bean
+	@Profile({"local", "dev"})
+	public CMSClient getCMSClientJMS() {
+		LOGGER.info("cmisurl: " + cmsProperties);
 		return ClientUtils.getClient(
 				this.connectionFactory(), 
 				cmsProperties.getCoatCheckUrl(), 
