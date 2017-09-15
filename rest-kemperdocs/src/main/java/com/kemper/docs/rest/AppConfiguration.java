@@ -18,7 +18,8 @@ import com.ksg.cms.client.CMSClient;
 import com.ksg.cms.client.util.ClientUtils;
 
 @Configuration
-@PropertySource("classpath:application-${spring.profiles.active}.properties")
+//@PropertySource("application-${spring.profiles.active}.properties")
+//@PropertySource("classpath:application-${spring.profiles.active}.properties")
 public class AppConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppConfiguration.class);
 	

@@ -27,6 +27,8 @@ repositories {
 
 configurations {
 	providedRuntime
+	//added to exclude Logback when log4j2 is used
+	compile.exclude(group: 'ch.qos.logback')
 }
 
 dependencies {
@@ -48,19 +50,34 @@ dependencies {
 	//additional jars needed for cmsclient
 	compile 'commons-net:commons-net:2.2'
 	//log4j for spring boot starter
-	compile('org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}')
+//	compile('org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "${springBootVersion}"
+	
 	
 	compile files('lib/CMSClient-2.4.jar')
 
 //cms jms:	
-	runtime files('lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/sonic_ASPI.jar', 'lib/sonic_Client.jar', 'lib/sonic_Client_ext.jar', 'lib/sonic_Crypto.jar', 'lib/sonic_Selector.jar', 'lib/sonic_XA.jar', 'lib/sonic_XMessage.jar', 'lib/sonic-jms-api.jar', 'lib/sonic-jms-ra.jar', 'lib/xbean.jar')
+//	runtime files('lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/sonic_ASPI.jar', 'lib/sonic_Client.jar', 'lib/sonic_Client_ext.jar', 'lib/sonic_Crypto.jar', 'lib/sonic_Selector.jar', 'lib/sonic_XA.jar', 'lib/sonic_XMessage.jar', 'lib/sonic-jms-api.jar', 'lib/sonic-jms-ra.jar', 'lib/xbean.jar')
+	compile files('lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/sonic_ASPI.jar', 'lib/sonic_Client.jar', 'lib/sonic_Client_ext.jar', 'lib/sonic_Crypto.jar', 'lib/sonic_Selector.jar', 'lib/sonic_XA.jar', 'lib/sonic_XMessage.jar', 'lib/sonic-jms-api.jar', 'lib/sonic-jms-ra.jar', 'lib/xbean.jar')
 
 //cms cmis:
 	runtime files('lib/woodstox-core-asl-4.4.0.jar','lib/stax2-api-3.1.4.jar','lib/CoatCheckClient.jar', 'lib/ContentManagementServiceXMLBeans-2.1.jar','lib/xbean.jar', 'lib/chemistry-opencmis-client-api-0.13.0.jar', 'lib/chemistry-opencmis-client-bindings-0.13.0.jar', 'lib/chemistry-opencmis-client-impl-0.13.0.jar', 'lib/chemistry-opencmis-commons-api-0.13.0.jar', 'lib/chemistry-opencmis-commons-impl-0.13.0.jar')
 	
+	// https://mvnrepository.com/artifact/javax.jms/jms
+	compile group: 'javax.jms', name: 'jms', version: '1.1'
+
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 //	testCompile('org.springframework.security:spring-security-test')
+}
+
+//added to allow passing of args like so:
+//gradlew bootRun -PjvmArgs="--spring.profiles.active=local --spring.config.location=C:\mongo\EGit_Repositories\rest-kemperdocs-config\"
+bootRun {
+	if ( project.hasProperty('args') ) {
+		args = (project.args.split('\\s+') as List)
+		println 'bootRun args: ' + args
+	}
 }
 
 task wrapper(type: Wrapper) {

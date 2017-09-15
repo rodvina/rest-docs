@@ -3,28 +3,56 @@
 
 #### Prerequisites
 * Java 8
+* Eclipse IDE with Spring Tooling feature (install from Marketplace)
 * This is a Spring Boot app and so can run in an embedded Tomcat server locally.
-* The gradle build is setup to build a deployable war
+* The gradle build is setup to build a deployable war (for non-local envs)
+* Configuration files (`application.*.properties`) are externalized and located in separate repo, [rest-kemperdocs-config](http://stash.kemperi.com:7990/projects/DEP/repos/rest-kemperdocs-config/browse).  You must also clone this repo into your workspace as a general project.  For more info on Spring Boot Externalized Configuration, read [this](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html).
 
 #### Clone and configure Gradle for Eclipse
-`git clone ssh://git@stash.kemperi.com:7999/dep/rest-kemperdocs.git`
+Clone both the [rest-kemperdocs](http://stash.kemperi.com:7990/projects/DEP/repos/rest-kemperdocs/browse) and [rest-kemperdocs-config](http://stash.kemperi.com:7990/projects/DEP/repos/rest-kemperdocs-config/browse) repos.
 
-After cloning the project into eclipse, you can configure the project to use gradle in 1 of 2 ways:
+After cloning the project into eclipse, you can configure the **rest-kemperdocs** project to use gradle in 1 of 2 ways:
 
-* Run `gradlew eclipse` 
-* Or, if you have the Gradle Buildship plugin, right click the project then choose `Configure | Add Gradle Nature`
+##### via Command line via Gradle
+cd into the project within the repo, then run `gradlew eclipse`
+		
+		cd c:\mongo\EGit_Repositories\rest-kemperdocs\rest-kemperdocs 
+		gradlew eclipse
+
+
+
+Or
+##### via Eclipse
+if your IDE has the Gradle Buildship plugin, right click the project then choose `Configure | Add Gradle Nature`
 
 #### Build and Run
+Running the application requires passing the `spring.config.location` and `spring.profiles.active` properties.  This allows the application to use the appropriate profile and configuration files.
 
-`gradlew bootRun`
+##### via Command line via Gradle
+Make sure you are in the root of the project folder, then
+
+		gradlew bootRun -Pargs="--spring.config.location=C:\mongo\EGit_Repositories\rest-kemperdocs-config\config\ --spring.profiles.active=local"
+
+
 
 OR
 
-From STS, right-click the project and select `Run As | Spring Boot App`
+##### via Eclipse via SpringBoot plugin
 
-OR
+From STS, right-click the project and select `Run As | Spring Boot App` (shortcut is `Alt-Shift-X, B`) 
 
-`Alt-Shift-X, B`
+Before running, this configure the run by choosing local as your profile
+![required image](doc/springboot-runconfig-profile.gif)
+
+
+then set the `spring.config.location` program arg to the folder path of the configuration files.  In this case, it should be the local **rest-kemperdocs-config** repo location 
+
+		--spring.config.location=file:///C:/mongo/EGit_Repositories/rest-kemperdocs-config/config/
+
+
+![required image](doc/springboot-runconfig-arg.gif)
+
+
 
 #### REST API
 
