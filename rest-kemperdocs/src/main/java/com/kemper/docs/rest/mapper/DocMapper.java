@@ -73,8 +73,8 @@ public abstract class DocMapper<T extends DocumentResult> implements IDocMapper<
 		
 	}
 	
-	protected String getCMSFieldValue(Map<String, String> metadataMap, CMSConstants.CMSField cmsField) {
-		return metadataMap.get(cmsField.toString());
+	protected String getCMSMetaDataValue(Map<String, String> metadataMap, CMSConstants.CMSMetaData cmsMeta) {
+		return metadataMap.get(cmsMeta.toString());
 	}
 	
 	/**

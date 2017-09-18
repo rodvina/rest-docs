@@ -24,6 +24,23 @@ public class CMSConstants {
 		INS_1ST_NM_MV,
 		MAIL_ST_NM_MV,
 		DOC_TYPE_TX
-		
+	}
+	
+	public enum CMSMetaData {
+		PRDCR_CD,
+		POL_NO_TX,
+		TRAN_TYPE_TX,
+		PRM_AMT,
+		POST_DT,
+		LOB_CD,
+		MAIL_CITY_NM,
+		RSK_ST_CD,
+		MAIL_ZIP_CD,
+		ACCT_NO_TX,
+		EFF_DT,
+		INS_LST_NM,
+		INS_1ST_NM,
+		MAIL_ST_NM,
+		DOC_TYPE_TX
 	}
 }
